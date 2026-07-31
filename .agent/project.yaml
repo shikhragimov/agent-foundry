@@ -1,0 +1,49 @@
+# Example project bindings for portable skills.
+# Copy into your repo as `.agent/project.yaml` and keep only what you need.
+# Skills read THEIR section only — do not put skill logic here.
+
+requirements:
+  output: docs/requirements.md
+
+architecture:
+  requirements: docs/requirements.md
+  output: docs/architecture.md
+
+science:
+  requirements: docs/requirements.md
+  architecture: docs/architecture.md
+  materials: docs/materials
+  output: docs/science.md
+
+# Optional overrides only; prefer repo detection for language / layout
+development: {}
+
+tools:
+  pre_commit:
+    command: uv run pre-commit run --all-files
+  tests:
+    command: uv run pytest
+
+debug: {}
+
+audit:
+  requirements: docs/requirements.md
+  architecture: docs/architecture.md
+  output: reports/audit.md
+
+devils_audit:
+  audit: reports/audit.md
+  output: reports/devils_audit.md
+
+security_review:
+  output: reports/security_review.md
+
+angels_advocate:
+  critique: reports/devils_audit.md
+  output: reports/angels_advocate.md
+
+operations:
+  # backend: local | scolab | ssh | kubectl | <project CLI>
+  backend: kubectl
+  namespace: dev-environment
+  job: dev-container-marat
