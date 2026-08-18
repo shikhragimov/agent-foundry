@@ -42,8 +42,15 @@ angels_advocate:
   critique: reports/devils_audit.md
   output: reports/angels_advocate.md
 
+anti_slop:
+  # scope: optional paths/globs; else chat / diff scope
+  output: reports/anti_slop.md
+
 operations:
   # backend: local | scolab | ssh | kubectl | <project CLI>
   backend: kubectl
   namespace: dev-environment
   job: dev-container-marat
+
+automize_ai:
+  output: AI_TOOLS

@@ -16,8 +16,10 @@ Portable skills from this repo. Installed via `./scripts/install-skills.sh` as *
 | devils-auditor | `/devils_auditor` | `devils_audit` | Adversarial review: false claims, stubs, break scenarios | Report-first | Often follows `/auditor`; output `reports/devils_audit.md` |
 | angels-advocate | `/angels_advocate` | `angels_advocate` | Steelmans / defends decisions under critique | Report-first | Pair with `/devils_auditor`; concede fair hits |
 | security-reviewer | `/security_reviewer` | `security_review` | Threat-focused security review → report | Report-first; no fix by default | Not Cursor’s built-in `/review-security` subagent |
+| anti-slop | `/anti_slop` | `anti_slop` | Hunt AI filler, stale generated docs/data, verbose prose, fawning; propose delete | Report-first; cleanup only if asked | Output default: `reports/anti_slop.md` |
 | status | `/status` | `operations` | Runtime status of a run/job/process (local, scolab, ssh, kubectl, …) | **Read-only** | Backend from binding or project detect |
 | job-operator | `/job_operator` | `operations` | Diagnose failed job; obvious fix + restart; else ask | Inspect < fix < restart; ask before risky | Uses `operations.namespace` + `operations.job` |
+| automize-ai | `/automize_ai` | `automize_ai` | Mine last chat for a repeated mechanical loop → tool in bound `output` | Write tool only; user reviews; no commit | Output path from YAML only; form follows the loop (script, plots, canvas, …) |
 | update-llm-benchmarks | `/update-llm-benchmarks` | — (this repo file) | Refresh `LLM_models_benchnmarks.md` from public leaderboards | Writes that markdown file | English table; bold top-3 per column |
 
 ## Shared conventions
