@@ -1,0 +1,20 @@
+[project]
+name = "agent-foundry"
+version = "0.1.0"
+description = "Portable agent skills and agent-config MCP (instructions over markdown)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "mcp>=2.0.0",
+  "uvicorn>=0.30.0",
+]
+
+[project.scripts]
+agent-config-mcp = "agent_config_mcp.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["agent_config_mcp*"]

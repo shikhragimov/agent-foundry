@@ -8,6 +8,7 @@ Portable skills from this repo. Installed via `./scripts/install-skills.sh` as *
 | requirements-analysis | `/requirements_analysis` | `requirements` | Goal, scope, constraints, scenarios, edge cases → requirements file | Write requirements doc only | Default output: `docs/requirements.md` |
 | architect | `/architect` | `architecture` | Requirements → design decision + implementation plan | Write architecture doc; no app code | After requirements, before developer; default `docs/architecture.md` |
 | scientist | `/scientist` | `science` | Approach + formulas; maps math to system | Write science doc; no app code | Reads requirements, architecture, optional `materials` → `docs/science.md` |
+| ui-ux | `/ui_ux` | `ui_ux` | UI/UX design or review for game / web / infographic | Write UI doc or review; no app code | Medium auto-detect; default `docs/ui.md` / `reports/ui_review.md` |
 | developer | `/developer` | `development` | Implements task; edits code + needed tests | Modify code/tests; no commit | Prefer repo detection; use `docs/architecture.md` if present |
 | pre-committer | `/pre_committer` | `tools.pre_commit` | Run pre-commit, fix, re-run until green | Fix for hooks only; no `--no-verify` | Distinct from legacy `pre-commiter` (one *t*) still in `~/.cursor/skills` |
 | tester | `/tester` | `tools.tests` | Full test suite → diagnose → fix → re-run full suite | Fix code/tests; don’t weaken asserts | Uses ready-to-run `command` from YAML |

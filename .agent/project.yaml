@@ -15,6 +15,14 @@ science:
   materials: docs/materials
   output: docs/science.md
 
+ui_ux:
+  # medium: game | web | infographic | auto
+  medium: auto
+  requirements: docs/requirements.md
+  architecture: docs/architecture.md
+  output: docs/ui.md
+  review_output: reports/ui_review.md
+
 # Optional overrides only; prefer repo detection for language / layout
 development: {}
 
