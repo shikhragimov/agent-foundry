@@ -142,10 +142,69 @@ def create_mcp() -> MCPServer:
     return mcp
 
 
+def _mesh_transport_security():
+    """Allow Tailscale / LAN Host headers (Serve proxies keep client Host)."""
+    from mcp.server.transport_security import TransportSecuritySettings
+
+    hosts = ["127.0.0.1:*", "localhost:*", "[::1]:*"]
+    origins = [
+        "http://127.0.0.1:*",
+        "http://localhost:*",
+        "http://[::1]:*",
+    ]
+
+    def _add(host: str) -> None:
+        host = (host or "").strip().rstrip(".")
+        if not host or host in ("127.0.0.1", "localhost", "::1"):
+            return
+        marker = f"{host}:*"
+        if marker not in hosts:
+            hosts.append(marker)
+            origins.append(f"http://{host}:*")
+
+    try:
+        import json
+        import subprocess
+
+        ip4 = subprocess.check_output(
+            ["tailscale", "ip", "-4"], text=True, timeout=2
+        ).strip()
+        if ip4:
+            _add(ip4)
+        raw = subprocess.check_output(
+            ["tailscale", "status", "--json"], text=True, timeout=2
+        )
+        name = (json.loads(raw).get("Self") or {}).get("DNSName") or ""
+        if name:
+            _add(name)
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError):
+        pass
+
+    try:
+        import socket
+
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            sock.connect(("1.1.1.1", 80))
+            lan = sock.getsockname()[0]
+        if lan and not lan.startswith("127."):
+            _add(lan)
+    except OSError:
+        pass
+
+    logger.info("MCP Host allowlist: %s", hosts)
+    return TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=hosts,
+        allowed_origins=origins,
+    )
+
+
 def create_app():
     """ASGI app for uvicorn (Streamable HTTP at /mcp)."""
     return create_mcp().streamable_http_app(
         streamable_http_path="/mcp",
         json_response=True,
         stateless_http=True,
+        transport_security=_mesh_transport_security(),
+        host="127.0.0.1",
     )
